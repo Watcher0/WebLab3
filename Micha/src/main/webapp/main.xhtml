@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <link rel="stylesheet" type="text/css" href="style_main.css"/>
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+    <title>Лабораторная №3</title>
+</h:head>
+<h:body>
+    <table width="1000" cellspacing="4" class="main">
+        <tr>
+            <td  colspan="2" id="shapka"><h3 class="shapka">Маракушев Михаил Алексеевич P32091 Вариант №91091 </h3></td>
+        </tr>
+        <tr>
+            <td align="center" class="coordin">
+                <canvas id="example" width="300" height="300"></canvas>
+            </td>
+            <td class="shapka">
+                <h:form method="GET" name="coor_form" class="forma" id="mainForm">
+                    <h4 class="form">Введите координаты X:</h4>
+                    <h:selectOneRadio value = "#{coordinates.coordinateX}"  style="width:150px" id="inputX">
+                        <f:selectItem itemValue = "-3" itemLabel = "-3" />
+                        <f:selectItem itemValue = "-2" itemLabel = "-2" />
+                        <f:selectItem itemValue = "-1" itemLabel = "-1" />
+                        <f:selectItem itemValue = "0" itemLabel = "0" />
+                        <f:selectItem itemValue = "1" itemLabel = "1" />
+                        <f:selectItem itemValue = "2" itemLabel = "2" />
+                        <f:selectItem itemValue = "3" itemLabel = "3" />
+                        <f:selectItem itemValue = "4" itemLabel = "4" />
+                        <f:selectItem itemValue = "5" itemLabel = "5" />
+                        <f:converter converterId="NumberConverter"/>
+                        <f:validator validatorId="Xvalid" />
+                    </h:selectOneRadio>
+                    <h:message for="inputX" class="error" />
+                    <h4 class="form">Введите координаты Y:</h4>
+                    <h:inputText id="inputY" value="#{coordinates.coordinateY}" type="text" maxlength="5" name="coor_y" placeholder="[-5..5]" class="coor_y">
+                        <f:converter converterId="NumberConverter"/>
+                        <f:validator validatorId="Yvalid" />
+                    </h:inputText>
+                    <br />
+                    <h:message for="inputY" class="error" />
+                    <h4 class="form">Введите R:</h4>
+                    <h:commandButton  action="#{coordinates.setRadius(1)}"  value="1" styleClass="buttonR">
+                        <f:ajax execute="@form" render="@none" />
+                    </h:commandButton>
+                    <h:commandButton  action="#{coordinates.setRadius(1.5)}" value="1.5" styleClass="buttonR">
+                        <f:ajax execute="@form" render="@none" />
+                    </h:commandButton>
+                    <h:commandButton  action="#{coordinates.setRadius(2)}" value="2" styleClass="buttonR">
+                        <f:ajax execute="@form" render="@none" />
+                    </h:commandButton>
+                    <h:commandButton  action="#{coordinates.setRadius(2.5)}" value="2.5" styleClass="buttonR">
+                        <f:ajax execute="@form" render="@none" />
+                    </h:commandButton>
+                    <h:commandButton  action="#{coordinates.setRadius(3)}" value="3" styleClass="buttonR">
+                        <f:ajax execute="@form" render="@none" />
+                    </h:commandButton>
+                    <br/><br/>
+                    <h:commandButton action="#{process.createNewValue()}" value="Save" class="button" id="button">
+
+                    </h:commandButton>
+                </h:form>
+                <br/>
+                <h:form>
+                    <h:commandButton action="index" value="На стартовую"/>
+                </h:form>
+                <h:form id="hiddenForm">
+                    <h:inputHidden id="X" value="#{coordinates.coordinateX}"/>
+                    <h:inputHidden id="Y" value="#{coordinates.coordinateY}"/>
+                    <h:inputHidden id="R" value="#{coordinates.radius}"/>
+                    <h:commandButton id="hiddenButton" style="visibility: hidden" action="#{process.createNewValue()}">
+                    </h:commandButton>
+                </h:form>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="shapka">
+                <h:dataTable id="valueTable" value="#{process.pointsBean.pointsList}" var="point" class="result">
+                    <h:column>
+                        <f:facet name="header">Значение X</f:facet>
+                        #{point.x}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Значение Y</f:facet>
+                        #{point.y}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Значение R</f:facet>
+                        #{point.r}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Время начала</f:facet>
+                        #{point.time}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Время выполнения</f:facet>
+                        #{point.long_time}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Результат</f:facet>
+                        #{point.result}
+                    </h:column>
+                </h:dataTable>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript" src="js/valid.js"></script>
+    <script type="text/javascript" src="js/canvas.js"></script>
+</h:body>
+<!--<f:view>-->
+<!--    <h:outputLabel value="Hello, world"/>-->
+<!--</f:view>-->
+</html>
